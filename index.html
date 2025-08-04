@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCart: AI-Powered Cart Optimizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Slate & Sky Blue" - A modern, professional palette with a light gray background (slate-100), white content cards (white), dark text (slate-800), and sky blue accents (sky-500/600) for interactive elements and highlights. -->
+    <!-- Application Structure Plan: A single-page dashboard layout is chosen for its modern feel and non-linear exploratory nature. It features a sticky top navigation bar for quick access to key sections: Overview, AI Modules, Architecture, and Roadmap. This structure allows stakeholders to either get a quick summary from the overview or dive deep into specific components like the AI models or technical stack, which is more engaging and user-friendly than a static, linear presentation. -->
+    <!-- Visualization & Content Choices: 
+        - Problem/Solution: Presented as clear, icon-driven cards for quick comprehension. Goal: Inform. Method: HTML/CSS.
+        - AI Modules: An interactive grid. Goal: Explain & Engage.
+            - Price Forecasting: Interactive line chart (Chart.js) to show dynamic data. Goal: Show Change. Interaction: Hover tooltips.
+            - User Profiling: Doughnut chart (Chart.js) to show proportions. Goal: Compare. Interaction: Hover to see percentages.
+            - Cart Optimization: Visual before/after comparison. Goal: Compare. Method: HTML/CSS.
+            - Delivery Prediction: Bar chart (Chart.js) to compare vendor times. Goal: Compare. Interaction: Hover to see exact days.
+        - Architecture: A diagram built with HTML/Tailwind to represent the tech stack visually without images. Goal: Organize.
+        - Roadmap: A vertical timeline made with HTML/Tailwind for clear, chronological presentation. Goal: Show Process.
+        - Outcomes: High-impact stat cards. Goal: Inform. Method: HTML/CSS with icons.
+        Justification: This mix of static and interactive elements provides a comprehensive yet easily digestible overview, catering to different levels of user interest.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-slate-900">
+                <span class="text-sky-600">Intelli</span>Cart
+            </h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview"
+                    class="text-slate-600 hover:text-sky-600 transition-colors duration-300">Overview</a>
+                <a href="#modules" class="text-slate-600 hover:text-sky-600 transition-colors duration-300">AI
+                    Modules</a>
+                <a href="#architecture"
+                    class="text-slate-600 hover:text-sky-600 transition-colors duration-300">Architecture</a>
+                <a href="#roadmap" class="text-slate-600 hover:text-sky-600 transition-colors duration-300">Roadmap</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#overview" class="block py-2 px-6 text-sm text-slate-600 hover:bg-sky-50">Overview</a>
+            <a href="#modules" class="block py-2 px-6 text-sm text-slate-600 hover:bg-sky-50">AI Modules</a>
+            <a href="#architecture" class="block py-2 px-6 text-sm text-slate-600 hover:bg-sky-50">Architecture</a>
+            <a href="#roadmap" class="block py-2 px-6 text-sm text-slate-600 hover:bg-sky-50">Roadmap</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="overview" class="mb-24 text-center">
+            <h2 class="text-4xl font-bold mb-4">The Future of E-Commerce is Intelligent</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">IntelliCart transforms the standard shopping cart
+                into a dynamic, AI-powered assistant, tackling the core challenges of modern online retail.</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-sky-600 text-4xl mb-4">📈</div>
+                    <h3 class="text-xl font-semibold mb-2">Price Volatility</h3>
+                    <p class="text-slate-600">Consumers miss the best deals due to constantly changing prices.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-sky-600 text-4xl mb-4">🤯</div>
+                    <h3 class="text-xl font-semibold mb-2">Overwhelming Choices</h3>
+                    <p class="text-slate-600">Finding optimal bundles and discounts is complex and time-consuming.</p>
+                </div>
+                <div
+                    class="bg-white p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-sky-600 text-4xl mb-4">⏳</div>
+                    <h3 class="text-xl font-semibold mb-2">Delivery Uncertainty</h3>
+                    <p class="text-slate-600">Unreliable delivery estimates lead to customer frustration.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="modules" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12">The Core AI Modules</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12 text-center">IntelliCart is powered by a suite of
+                interconnected AI models. Each module is designed to solve a specific challenge, working together to
+                create a seamless and optimized shopping experience.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4">1. Predictive Price Forecasting</h3>
+                    <p class="text-slate-600 mb-6">Analyzes historical price data using LSTM/Prophet models to recommend
+                        the optimal time to purchase, providing clear "Wait vs. Buy" advice.</p>
+                    <div class="chart-container">
+                        <canvas id="priceForecastChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4">2. Dynamic User Profiling</h3>
+                    <p class="text-slate-600 mb-6">Classifies user intent in real-time based on browsing behavior to
+                        personalize recommendations for their specific needs.</p>
+                    <div class="chart-container">
+                        <canvas id="userProfileChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4">3. Cart Optimization & Bundling</h3>
+                    <p class="text-slate-600 mb-6">An RL agent fine-tunes the cart, identifying cost-effective bundles
+                        and applying the best coupons to maximize savings.</p>
+                    <div class="flex flex-col sm:flex-row justify-around items-center h-full">
+                        <div class="text-center p-4">
+                            <p class="font-semibold mb-2 text-red-500">Before IntelliCart</p>
+                            <div class="text-3xl font-bold">₹1,250</div>
+                            <div class="text-slate-500">3 items</div>
+                        </div>
+                        <div class="text-sky-600 text-4xl font-bold my-4 sm:my-0">→</div>
+                        <div class="text-center p-4 border-4 border-green-400 rounded-lg">
+                            <p class="font-semibold mb-2 text-green-600">After IntelliCart</p>
+                            <div class="text-3xl font-bold">₹980</div>
+                            <div class="text-slate-500">3 items + 15% Bundle</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold mb-4">4. Delivery Time Prediction</h3>
+                    <p class="text-slate-600 mb-6">Uses regression models trained on vendor and regional data to provide
+                        highly accurate delivery time estimates.</p>
+                    <div class="chart-container">
+                        <canvas id="deliveryPredictionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12">Application Architecture</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12 text-center">Built on a modern, scalable tech stack
+                designed for high performance and flexibility, ensuring a robust foundation for our AI-driven features.
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Frontend</h4>
+                        <p class="font-semibold">AngularJS</p>
+                        <p class="text-sm text-slate-500">Dynamic User Interface</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Backend</h4>
+                        <p class="font-semibold">Springboot</p>
+                        <p class="text-sm text-slate-500">Robust API & Business Logic</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">AI Models</h4>
+                        <p class="font-semibold">Python / TensorFlow</p>
+                        <p class="text-sm text-slate-500">Machine Learning Engine</p>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center my-4">
+                    <div class="w-px h-8 bg-slate-300"></div>
+                </div>
+                <div class="text-center text-4xl text-slate-400 my-4">↓</div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Database</h4>
+                        <p class="font-semibold">PostgreSQL</p>
+                        <p class="text-sm text-slate-500">Persistent Data Storage</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Caching</h4>
+                        <p class="font-semibold">Redis</p>
+                        <p class="text-sm text-slate-500">High-Speed Data Access</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Messaging</h4>
+                        <p class="font-semibold">Kafka <span class="text-xs">(Optional)</span></p>
+                        <p class="text-sm text-slate-500">Asynchronous Communication</p>
+                    </div>
+                    <div class="text-center p-4 rounded-lg bg-slate-50">
+                        <h4 class="font-bold text-lg mb-2 text-sky-700">Deployment</h4>
+                        <p class="font-semibold">Docker</p>
+                        <p class="text-sm text-slate-500">Containerized Environment</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-12">Project Development Roadmap</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12 text-center">Our development is structured in four
+                distinct phases, ensuring a methodical progression from foundational setup to full-scale deployment and
+                analysis.</p>
+            <div class="relative max-w-2xl mx-auto">
+                <div class="absolute left-1/2 w-0.5 h-full bg-sky-300 -translate-x-1/2"></div>
+
+                <div class="relative mb-8">
+                    <div class="absolute left-1/2 w-4 h-4 bg-sky-600 rounded-full -translate-x-1/2 mt-1.5"></div>
+                    <div class="ml-[calc(50%+2rem)] bg-white p-6 rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Phase 1: Foundation</h4>
+                        <p class="text-slate-600">Setup core backend, database, and a basic UI. Establish data ingestion
+                            pipelines.</p>
+                    </div>
+                </div>
+
+                <div class="relative mb-8">
+                    <div class="absolute left-1/2 w-4 h-4 bg-sky-600 rounded-full -translate-x-1/2 mt-1.5"></div>
+                    <div class="mr-[calc(50%+2rem)] bg-white p-6 rounded-xl shadow-lg text-right">
+                        <h4 class="font-bold text-xl mb-2">Phase 2: Core AI</h4>
+                        <p class="text-slate-600">Develop and train price forecasting and user profiling models.
+                            Integrate with backend API.</p>
+                    </div>
+                </div>
+
+                <div class="relative mb-8">
+                    <div class="absolute left-1/2 w-4 h-4 bg-sky-600 rounded-full -translate-x-1/2 mt-1.5"></div>
+                    <div class="ml-[calc(50%+2rem)] bg-white p-6 rounded-xl shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Phase 3: Optimization</h4>
+                        <p class="text-slate-600">Implement cart optimization, bundling, and delivery prediction.
+                            Enhance frontend to display recommendations.</p>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute left-1/2 w-4 h-4 bg-sky-600 rounded-full -translate-x-1/2 mt-1.5"></div>
+                    <div class="mr-[calc(50%+2rem)] bg-white p-6 rounded-xl shadow-lg text-right">
+                        <h4 class="font-bold text-xl mb-2">Phase 4: Deployment</h4>
+                        <p class="text-slate-600">Containerize with Docker, integrate caching, and conduct supply chain
+                            intelligence study.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="outcomes" class="text-center bg-white py-16 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-center mb-12">Expected Outcomes</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-8">
+                <div class="text-center">
+                    <div class="text-sky-600 text-5xl mb-3">💰</div>
+                    <h4 class="text-xl font-semibold">Cost Reduction</h4>
+                    <p class="text-slate-600">Up to 15-25% reduction in total cart cost for users.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-sky-600 text-5xl mb-3">😊</div>
+                    <h4 class="text-xl font-semibold">Enhanced UX</h4>
+                    <p class="text-slate-600">A personalized, intuitive, and frustration-free shopping process.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-sky-600 text-5xl mb-3">🚚</div>
+                    <h4 class="text-xl font-semibold">Delivery Reliability</h4>
+                    <p class="text-slate-600">Highly accurate delivery predictions to build customer trust.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-sky-600 text-5xl mb-3">🤖</div>
+                    <h4 class="text-xl font-semibold">AI Showcase</h4>
+                    <p class="text-slate-600">A powerful demonstration of AI solving real-world business problems.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h3 class="text-xl font-bold"><span class="text-sky-500">Intelli</span>Cart Project</h3>
+            <p class="text-slate-400 mt-2">B.Tech Project Work Phase-I | 2025-26</p>
+            <div class="mt-4 text-sm text-slate-500">
+                B. Laya, J. Navadeep, M. Sandeep, P. Jayakrishna
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('#mobile-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#475569'
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#475569' },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: { color: '#475569' },
+                        grid: { color: '#e2e8f0' }
+                    }
+                }
+            };
+
+            const priceForecastCtx = document.getElementById('priceForecastChart').getContext('2d');
+            new Chart(priceForecastCtx, {
+                type: 'line',
+                data: {
+                    labels: ['-4W', '-3W', '-2W', '-1W', 'Today', '+1W', '+2W'],
+                    datasets: [{
+                        label: 'Historical Price',
+                        data: [110, 105, 115, 100, 95, null, null],
+                        borderColor: '#64748b',
+                        backgroundColor: '#64748b',
+                        tension: 0.1,
+                        segment: {
+                            borderColor: ctx => ctx.p1.parsed.x > 3 ? '#0284c7' : undefined,
+                        }
+                    }, {
+                        label: 'Predicted Price',
+                        data: [null, null, null, null, 95, 90, 85],
+                        borderColor: '#0284c7',
+                        backgroundColor: '#0284c7',
+                        borderDash: [5, 5],
+                        tension: 0.1
+                    }]
+                },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, tooltip: { callbacks: { label: (c) => `₹${c.raw}` } } } }
+            });
+
+            const userProfileCtx = document.getElementById('userProfileChart').getContext('2d');
+            new Chart(userProfileCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cost-Sensitive', 'Brand-Loyal', 'Delivery-Prioritized', 'Explorer'],
+                    datasets: [{
+                        label: 'User Personas',
+                        data: [45, 25, 20, 10],
+                        backgroundColor: ['#0ea5e9', '#38bdf8', '#7dd3fc', '#e0f2fe'],
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#475569' } },
+                        tooltip: { callbacks: { label: (c) => `${c.label}: ${c.raw}%` } }
+                    }
+                }
+            });
+
+            const deliveryPredictionCtx = document.getElementById('deliveryPredictionChart').getContext('2d');
+            new Chart(deliveryPredictionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Vendor A', 'Vendor B', 'Vendor C', 'Vendor D'],
+                    datasets: [{
+                        label: 'Predicted Delivery (Days)',
+                        data: [3, 5, 2, 4],
+                        backgroundColor: ['#7dd3fc', '#38bdf8', '#0ea5e9', '#0284c7'],
+                        borderRadius: 5
+                    }]
+                },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.raw} Days` } } } }
+            });
+        });
+    </script>
+</body>
+
+</html>
