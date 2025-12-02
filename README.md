@@ -1,0 +1,2 @@
+# IntelliCart
+Smart Cart Optimizer
