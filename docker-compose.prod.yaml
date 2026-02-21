@@ -1,0 +1,10 @@
+services:
+  frontend-prod:
+    container_name: frontend-prod
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod 
+    ports:
+      - "5174:80"
+    environment:
+      - NODE_ENV=production

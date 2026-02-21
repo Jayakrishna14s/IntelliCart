@@ -1,0 +1,66 @@
+services:
+  frontend-dev:
+    container_name: frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev 
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/package.json:/app/package.json
+      - /app/node_modules  
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_BACKEND=http://localhost:8080
+
+  backend-dev:
+    container_name: backend-dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev 
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8080:8080"
+    # environment:
+    #   - name=value
+    depends_on:
+      - db-dev
+    
+  db-dev:
+    image: postgres:18.1
+    container_name: db-dev
+    # restart: always
+    environment:
+      - POSTGRES_DB=IntelliCart
+      - POSTGRES_USER=intellicart
+      - POSTGRES_PASSWORD=intellicart
+      # - TZ=Asia/Kolkata
+      # - PGTZ=Asia/Kolkata
+    volumes:
+      - db-vol:/var/lib/postgresql/
+      # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql  # optional init script
+    ports:
+      - "5432:5432"
+
+  # redis-dev:
+  #   container_name: redis-dev
+  #   image: redis:latest
+
+  # redis-insight-dev:
+  #   container_name: redis-insight-dev
+  #   image: redis/redisinsight:latest
+
+  # kafka-dev:
+  #   container_name: kafka-dev
+  #   image: apache/kafka-native
+
+  # kafka-ui-dev:
+  #   container_name: kafka-ui-dev
+  #   image: ghcr.io/kafbat/kafka-ui:latest
+  
+volumes:
+  db-vol:
