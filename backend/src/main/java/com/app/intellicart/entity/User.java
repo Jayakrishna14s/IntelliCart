@@ -13,10 +13,9 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -34,4 +33,17 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AccountType role = AccountType.CUSTOMER;
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

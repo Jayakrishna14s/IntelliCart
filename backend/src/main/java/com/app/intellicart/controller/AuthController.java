@@ -1,6 +1,5 @@
 package com.app.intellicart.controller;
 
-
 import com.app.intellicart.config.JwtProperties;
 import com.app.intellicart.dto.auth.LoginRequest;
 import com.app.intellicart.dto.auth.SignupRequest;
@@ -25,11 +24,13 @@ public class AuthController {
     private final AuthService authService;
     private final Long cookieMaxAge;
     private final JwtService jwtService;
+    private final UserMapper userMapper;
 
-    public AuthController(AuthService authService, JwtProperties jwtProperties, JwtService jwtService) {
+    public AuthController(AuthService authService, JwtProperties jwtProperties, JwtService jwtService, UserMapper userMapper) {
         this.authService = authService;
         this.cookieMaxAge = jwtProperties.getExpiration() / 1000;
         this.jwtService = jwtService;
+        this.userMapper = userMapper;
     }
 
 
@@ -37,7 +38,7 @@ public class AuthController {
     public ResponseEntity<UserResponse> signup(@RequestBody @Valid SignupRequest signupRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(UserMapper.toResponse(authService.signup(signupRequest)));
+                .body(userMapper.toResponse(authService.signup(signupRequest)));
     }
 
     @PostMapping("/login")
@@ -53,7 +54,7 @@ public class AuthController {
         cookie.setMaxAge(Math.toIntExact(cookieMaxAge));
 
         response.addCookie(cookie);
-        return ResponseEntity.ok(UserMapper.toResponse(user));
+        return ResponseEntity.ok(userMapper.toResponse(user));
     }
 
     @DeleteMapping("/logout")
@@ -69,6 +70,6 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<UserResponse> me(@AuthenticationPrincipal SecurityUserDetails userDetails) {
-        return ResponseEntity.ok(UserMapper.toResponse(userDetails.getUser()));
+        return ResponseEntity.ok(userMapper.toResponse(userDetails.getUser()));
     }
 }

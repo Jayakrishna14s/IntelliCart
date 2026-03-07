@@ -24,13 +24,13 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final AuthValidator authValidator;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
 
     public User signup(SignupRequest payload) {
         authValidator.validate(payload);
-        User user = UserMapper.toEntity(payload);
-        user.setPassword(passwordEncoder.encode(payload.getPassword()));
+        User user = userMapper.toEntity(payload);
+        // user.setPassword(passwordEncoder.encode(payload.getPassword()));
         userRepository.save(user);
         return user;
     }

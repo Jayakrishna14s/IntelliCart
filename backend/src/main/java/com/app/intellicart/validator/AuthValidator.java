@@ -2,6 +2,7 @@ package com.app.intellicart.validator;
 
 import com.app.intellicart.dto.auth.LoginRequest;
 import com.app.intellicart.dto.auth.SignupRequest;
+import com.app.intellicart.enums.AccountType;
 import com.app.intellicart.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,9 +19,9 @@ public class AuthValidator {
             throw new RuntimeException("Email already in use");
         }
 
-        //        if(payload.getAccountType().equals("ADMIN")) {
-        //            throw new RuntimeException("Admin Registration is not allowed");
-        //        }
+        if(payload.getRole().equals(AccountType.ADMIN)) {
+            throw new RuntimeException("Admin Registration is not allowed");
+        }
     }
 
     public void validate(LoginRequest payload) {
