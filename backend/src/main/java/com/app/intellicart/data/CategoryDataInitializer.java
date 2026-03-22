@@ -8,12 +8,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Order(2)
 public class CategoryDataInitializer implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -31,8 +33,8 @@ public class CategoryDataInitializer implements CommandLineRunner {
         Category mobiles = categoryMapper.toEntity("Mobiles");
         Category laptops = categoryMapper.toEntity("Laptops");
 
-        Category men = categoryMapper.toEntity("Men");
-        Category women = categoryMapper.toEntity("Women");
+        Category men = categoryMapper.toEntity("Men's Fashions");
+        Category women = categoryMapper.toEntity("Women's Fashions");
 
         electronics.addChild(mobiles);
         electronics.addChild(laptops);
