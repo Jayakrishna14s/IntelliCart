@@ -60,14 +60,14 @@ export const Login = () => {
 
     try {
       await axios.post(
-          `${BACKEND_URL}/auth/login`,
-          {
-            email: loginForm.email,
-            password: loginForm.password,
-          },
-          {
-            withCredentials: true, // critical for JWT cookie
-          }
+        `${BACKEND_URL}/auth/login`,
+        {
+          email: loginForm.email,
+          password: loginForm.password,
+        },
+        {
+          withCredentials: true, // critical for JWT cookie
+        },
       );
 
       addAlert("Login successful", "success");
@@ -76,8 +76,7 @@ export const Login = () => {
       // decisive move
       window.location.href = "/home";
     } catch (err) {
-      const msg =
-          err.response?.data?.message || "Invalid email or password";
+      const msg = err.response?.data?.message || "Invalid email or password";
       addAlert(msg);
     }
   };

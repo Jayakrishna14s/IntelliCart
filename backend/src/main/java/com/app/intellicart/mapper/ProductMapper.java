@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class ProductMapper {
 
-    public Product toEntity(String name, String description, String brand, String sku, Category category, Map<String, Object> attributes) {
+    public Product toEntity(String name, String description, String brand, String sku, Category category,  Map<String, Object> attributes) {
         return Product.builder()
                 .name(name)
                 .description(description)

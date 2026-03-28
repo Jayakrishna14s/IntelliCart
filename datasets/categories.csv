@@ -1,0 +1,29 @@
+id,name,parent_id
+1,Electronics,
+2,Home & Kitchen,
+3,Fashion,
+4,Beauty,
+5,Groceries,
+6,Books,
+7,Sports,
+8,Audio,1.0
+9,Computer Accessories,1.0
+10,Wearable Tech,1.0
+11,Cookware,2.0
+12,Kitchen Appliances,2.0
+13,Storage & Bottles,2.0
+14,Men's Fashion,3.0
+15,Women's Fashion,3.0
+16,Accessories,3.0
+17,Skin Care,4.0
+18,Hair Care,4.0
+19,Makeup,4.0
+20,Staples,5.0
+21,Beverages,5.0
+22,Packaged Foods,5.0
+23,Academic Books,6.0
+24,Programming Books,6.0
+25,Interview Prep Books,6.0
+26,Fitness,7.0
+27,Outdoor Sports,7.0
+28,Cricket & Racquet Sports,7.0

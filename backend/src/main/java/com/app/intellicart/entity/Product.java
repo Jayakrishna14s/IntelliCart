@@ -35,6 +35,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private String image = "https://www.shutterstock.com/image-vector/3d-shopping-cart-percentages-concepts-600nw-2659202387.jpg";
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     @Builder.Default
